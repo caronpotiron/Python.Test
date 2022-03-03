@@ -1,1 +1,57 @@
-blabla
+#!/usr/bin/env python
+# -----------------------------------------------------------------------
+from math import pi, sqrt, sin, cos, exp
+from random import *
+
+max_steps = 100000   #How many MC steps to run
+L = 1.0         #length of box
+T = 298         #temperature
+Kb= 0.001987204 #Boltzmann constant in kcal/mol
+a = 1.0         #constant in the potential
+max_perturb = L*0.10  #maximum +/- perturbation size
+
+# -----------------------------------------------------------
+# initialize variables and randomly generate initial position
+# -----------------------------------------------------------
+x = random()*L    #function random generates random number between 0-1 
+E = a*x*x
+E_average = 0.0
+x_average = 0.0
+
+# --------------------------------------------------
+# Loop over the total number of MC steps specified
+# --------------------------------------------------
+for istep in range(1,max_steps):
+
+   # randomly perturb the position
+   perturb = random()*L  # you need to add something here 
+   x_new = x + perturb
+   E_new = a*x_new*x_new
+
+   # make sure perturbation stays inside of the box
+   if x_new > L:     
+      x_new = L
+   elif x_new < 0:
+      x_new = 0
+
+   if E_new <= E:
+      x = x_new
+      E = E_new
+   else:
+      a_p = exp((-E_new-E) / Kb*T)
+
+   if perturb < a_p:
+      x = x_new
+      E = E_new
+   else:
+      x = x
+      E = E 
+
+# loop over all MC steps is complete
+# compute average energy and average position
+
+
+E_average = (E / max_steps)
+x_average = (x / max_steps)
+
+print(x_average, E_average)
