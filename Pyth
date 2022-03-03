@@ -60,10 +60,10 @@ sum_positions = 0.0
 sum_energy = 0.0
 
 for pos in positions:
-sum_positions = sum_positions + pos
+   sum_positions = sum_positions + pos
 
 for ene in energy:
-sum_energy = sum_energy + ene
+   sum_energy = sum_energy + ene
 
 E_average = (sum_energy / max_steps)
 x_average = (sum_positions / max_steps)
